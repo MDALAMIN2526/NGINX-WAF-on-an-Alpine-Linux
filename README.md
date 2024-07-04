@@ -13,11 +13,10 @@ apk update
 ```sh
 apk upgrade
    ```
-### Step 1: Install Required Packages
+### Install Required Packages
 
 ```sh
-apk add nginx mariadb mariadb-client php82 php82-fpm php82-opcache php82-gd php82-mysqli php82-zlib php82-curl php82-mbstring php82-json php82-session php82-xml
- gcc g++ make automake libtool pcre pcre-dev zlib zlib-dev libxml2 libxml2-dev curl-dev m4 autoconf automake libtool git geoip geoip-dev yajl yajl-dev lmdb lmdb-dev lua5.3 lua5.3-dev pcre2 pcre2-dev linux-headers
+apk add nginx mariadb mariadb-client php82 php82-fpm php82-opcache php82-gd php82-mysqli php82-zlib php82-curl php82-mbstring php82-json php82-session php82-xml gcc g++ make automake libtool pcre pcre-dev zlib zlib-dev libxml2 libxml2-dev curl-dev m4 autoconf automake libtool git geoip geoip-dev yajl yajl-dev lmdb lmdb-dev lua5.3 lua5.3-dev pcre2 pcre2-dev linux-headers
 ```
 ```sh
 rc-update add nginx
@@ -94,7 +93,7 @@ listen.group = nginx
 listen.mode = 0660
 
 ```
-### Step 2: Create an NGINX Server Block for Your Domain
+### Create an NGINX Server Block for Your Domain
 Create a new server block configuration file for your domain.
 
 1. **Create a new configuration file:**
@@ -135,7 +134,7 @@ Create a new server block configuration file for your domain.
    }
    ```
 
-### Step 3: Enable and Reload NGINX
+### Enable and Reload NGINX
 1. **Test the NGINX configuration:**
    ```sh
    nginx -t
@@ -146,7 +145,7 @@ Create a new server block configuration file for your domain.
    nginx -s reload
    ```
 
-### Step 4: Obtain and Install SSL Certificate (Optional but Recommended)
+### Obtain and Install SSL Certificate (Optional but Recommended)
 Using Let's Encrypt to secure your site with SSL:
 
 1. **Install Certbot:**
@@ -161,7 +160,7 @@ Using Let's Encrypt to secure your site with SSL:
 
 3. **Follow the prompts to complete the SSL installation.**
 
-### Step 5: Update NGINX Server Block for SSL (If SSL is installed)
+### Update NGINX Server Block for SSL (If SSL is installed)
 1. **Edit the NGINX configuration file for your domain:**
    ```sh
    nano /etc/nginx/http.d/waf.codepromax.com.de.conf
@@ -221,11 +220,11 @@ Using Let's Encrypt to secure your site with SSL:
    nginx -s reload
    ```
 
-### Step 6: Verify Your Setup
+### Verify Your Setup
 1. **Open your browser and navigate to `http://waf.codepromax.com.de` or `https://waf.codepromax.com.de`.**
 
 
-### Step 2: Install `PCRE2` from Source
+### Install `PCRE2` from Source
 
 1. **Download the `PCRE2` source code:**
    ```sh
@@ -252,7 +251,7 @@ Using Let's Encrypt to secure your site with SSL:
    ```sh
    make install
    ```
-### Step 3: Install `LMDB` from Source
+### Install `LMDB` from Source
 
 1. **Download the `LMDB` source code:**
    ```sh
@@ -273,7 +272,7 @@ Using Let's Encrypt to secure your site with SSL:
    ```sh
    make install
    ```
-### Step 3: Install `ssdeep` from Source
+### Install `ssdeep` from Source
 
 1. **Download the `ssdeep` source code:**
    ```sh
@@ -301,7 +300,7 @@ Using Let's Encrypt to secure your site with SSL:
    make install
    ```
 
-### Step 4: Proceed with ModSecurity Build
+### Proceed with ModSecurity Build
 
 1. **Download the ModSecurity source code:**
    ```sh
@@ -338,7 +337,7 @@ Using Let's Encrypt to secure your site with SSL:
    make install
    ```
 
-### Step 5: Install ModSecurity-nginx Connector and NGINX
+### Install ModSecurity-nginx Connector and NGINX
 
 1. **Download the ModSecurity-nginx connector:**
    ```sh
@@ -387,7 +386,7 @@ Using Let's Encrypt to secure your site with SSL:
    load_module modules/ngx_http_modsecurity_module.so;
    ```
 
-### Step 8: Download and Configure the ModSecurity Rules and OWASP Core Rule Set
+### Download and Configure the ModSecurity Rules and OWASP Core Rule Set
 
 1. **Create the ModSecurity configuration directory:**
 
@@ -431,7 +430,7 @@ Using Let's Encrypt to secure your site with SSL:
    Include /etc/nginx/modsec/rules/*.conf
    ```
 
-### Step 9: Update NGINX Configuration
+### Update NGINX Configuration
 
 1. **Edit the main NGINX configuration file (`/etc/nginx/nginx.conf`) to load the ModSecurity module:**
 
@@ -538,7 +537,7 @@ Using Let's Encrypt to secure your site with SSL:
    ```
 
 
-### Step 10: Verify and Start NGINX
+### Verify and Start NGINX
 
 1. **Verify your NGINX configuration:**
 
