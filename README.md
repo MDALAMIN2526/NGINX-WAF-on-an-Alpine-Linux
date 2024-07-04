@@ -1,5 +1,5 @@
 # NGINX-WAF-on-an-Alpine-Linux
-NGINX with ModSecurity as a Web Application Firewall (WAF) on an Alpine Linux
+install Wordpress with NGINX & NGINX ModSecurity as a Web Application Firewall (WAF) on an Alpine Linux
 ### Update the System
 ```sh
 nano /etc/apk/repositories
@@ -94,6 +94,136 @@ listen.group = nginx
 listen.mode = 0660
 
 ```
+### Step 2: Create an NGINX Server Block for Your Domain
+Create a new server block configuration file for your domain.
+
+1. **Create a new configuration file:**
+   ```sh
+   nano /etc/nginx/http.d/waf.codepromax.com.de.conf
+   ```
+
+2. **Add the following configuration:**
+   ```nginx
+   server {
+       listen 80;
+       server_name waf.codepromax.com.de;
+
+       root /var/www/wordpress;
+       index index.php index.html index.htm;
+
+       access_log /var/log/nginx/waf.codepromax.com.de.access.log;
+       error_log /var/log/nginx/waf.codepromax.com.de.error.log;
+
+       # Load ModSecurity configuration
+       modsecurity on;
+       modsecurity_rules_file /etc/nginx/modsec/modsecurity.conf;
+
+       location / {
+           try_files $uri $uri/ /index.php?$args;
+       }
+
+       location ~ \.php$ {
+           include fastcgi_params;
+           fastcgi_pass unix:/var/run/php82-fpm.sock;
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+           fastcgi_index index.php;
+       }
+
+       location ~ /\.ht {
+           deny all;
+       }
+   }
+   ```
+
+### Step 3: Enable and Reload NGINX
+1. **Test the NGINX configuration:**
+   ```sh
+   nginx -t
+   ```
+
+2. **Reload NGINX to apply the changes:**
+   ```sh
+   nginx -s reload
+   ```
+
+### Step 4: Obtain and Install SSL Certificate (Optional but Recommended)
+Using Let's Encrypt to secure your site with SSL:
+
+1. **Install Certbot:**
+   ```sh
+   apk add certbot certbot-nginx
+   ```
+
+2. **Obtain an SSL certificate:**
+   ```sh
+   certbot --nginx -d waf.codepromax.com.de
+   ```
+
+3. **Follow the prompts to complete the SSL installation.**
+
+### Step 5: Update NGINX Server Block for SSL (If SSL is installed)
+1. **Edit the NGINX configuration file for your domain:**
+   ```sh
+   nano /etc/nginx/http.d/waf.codepromax.com.de.conf
+   ```
+
+2. **Update the configuration to redirect HTTP to HTTPS and listen on port 443:**
+   ```nginx
+   server {
+       listen 80;
+       server_name waf.codepromax.com.de;
+       return 301 https://$host$request_uri;
+   }
+
+   server {
+       listen 443 ssl;
+       server_name waf.codepromax.com.de;
+
+       ssl_certificate /etc/letsencrypt/live/waf.codepromax.com.de/fullchain.pem;
+       ssl_certificate_key /etc/letsencrypt/live/waf.codepromax.com.de/privkey.pem;
+       include /etc/letsencrypt/options-ssl-nginx.conf;
+       ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+       root /var/www/wordpress;
+       index index.php index.html index.htm;
+
+       access_log /var/log/nginx/waf.codepromax.com.de.access.log;
+       error_log /var/log/nginx/waf.codepromax.com.de.error.log;
+
+       # Load ModSecurity configuration
+       modsecurity on;
+       modsecurity_rules_file /etc/nginx/modsec/modsecurity.conf;
+
+       location / {
+           try_files $uri $uri/ /index.php?$args;
+       }
+
+       location ~ \.php$ {
+           include fastcgi_params;
+           fastcgi_pass unix:/var/run/php82-fpm.sock;
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+           fastcgi_index index.php;
+       }
+
+       location ~ /\.ht {
+           deny all;
+       }
+   }
+   ```
+
+3. **Test the NGINX configuration:**
+   ```sh
+   nginx -t
+   ```
+
+4. **Reload NGINX to apply the changes:**
+   ```sh
+   nginx -s reload
+   ```
+
+### Step 6: Verify Your Setup
+1. **Open your browser and navigate to `http://waf.codepromax.com.de` or `https://waf.codepromax.com.de`.**
+
 
 ### Step 2: Install `PCRE2` from Source
 
