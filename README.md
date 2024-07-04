@@ -16,7 +16,7 @@ apk upgrade
 ### Install Required Packages
 
 ```sh
-apk add nginx mariadb mariadb-client php82 php82-fpm php82-opcache php82-gd php82-mysqli php82-zlib php82-curl php82-mbstring php82-json php82-session php82-xml gcc g++ make automake libtool pcre pcre-dev zlib zlib-dev libxml2 libxml2-dev curl-dev m4 autoconf automake libtool git geoip geoip-dev yajl yajl-dev lmdb lmdb-dev lua5.3 lua5.3-dev pcre2 pcre2-dev linux-headers
+apk add nano nginx mariadb mariadb-client php82 php82-fpm php82-opcache php82-gd php82-mysqli php82-zlib php82-curl php82-mbstring php82-json php82-session php82-xml gcc g++ make automake libtool pcre pcre-dev zlib zlib-dev libxml2 libxml2-dev curl-dev m4 autoconf automake libtool git geoip geoip-dev yajl yajl-dev lmdb lmdb-dev lua5.3 lua5.3-dev pcre2 pcre2-dev linux-headers
 ```
 ```sh
 rc-update add nginx
