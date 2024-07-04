@@ -2,17 +2,21 @@
 install Wordpress with NGINX & NGINX ModSecurity as a Web Application Firewall (WAF) on an Alpine Linux
 ### Update the System
 ```sh
+apk update
+```
+```sh
+apk upgrade
+```
+```sh
+apk add nano
+```
+```sh
 nano /etc/apk/repositories
 ```
 ```sh
 http://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 ```
-```sh
-apk update
-```
-```sh
-apk upgrade
-   ```
+
 ### Install Required Packages
 
 ```sh
