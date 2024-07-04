@@ -13,9 +13,9 @@ apk add nano
 ```sh
 nano /etc/apk/repositories
 ```
-```sh
-http://dl-cdn.alpinelinux.org/alpine/latest-stable/community
-```
+
+Enable community option
+
 
 ### Install Required Packages
 
@@ -91,7 +91,7 @@ nano /etc/php7/php-fpm.d/www.conf
 ```sh
 user = nginx
 group = nginx
-listen = /var/run/php7-fpm.sock
+listen = /var/run/php82-fpm.sock
 listen.owner = nginx
 listen.group = nginx
 listen.mode = 0660
