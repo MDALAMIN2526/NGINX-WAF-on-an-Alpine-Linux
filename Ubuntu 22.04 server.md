@@ -293,4 +293,4 @@ modsecurity_rules_file /etc/nginx/modsecurity.conf;
 ```bash
 sudo systemctl restart nginx
 ```
-By following these steps, NGINX should now correctly serve your Laravel application under wap2.codepromax.com.de, with ModSecurity enabled to enhance security against potential web attacks. Adjust paths and settings according to your specific server setup and requirements.
+By following these steps, NGINX should now correctly serve your applications with ModSecurity enabled to enhance security against potential web attacks. Adjust paths and settings according to your specific server setup and requirements.
