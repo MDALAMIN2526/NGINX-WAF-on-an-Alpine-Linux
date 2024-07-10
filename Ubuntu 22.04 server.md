@@ -1,4 +1,4 @@
-Here's a step-by-step guide to setting up an Ubuntu 22.04 server with NGINX, configuring a WordPress site (wap.codepromax.com.de), a Laravel v10 site (wap2.codepromax.com.de), and setting up NGINX ModSecurity:
+Here's a step-by-step guide to setting up an Ubuntu 22.04 server with NGINX, configuring a WordPress site (waf.codepromax.com.de), a Laravel v10 site (waf2.codepromax.com.de), and setting up NGINX ModSecurity:
 
 ### Update the System
 ```bash
@@ -166,13 +166,13 @@ sudo wget https://wordpress.org/latest.tar.gz
 sudo tar -xzvf latest.tar.gz
 ```
 ```bash
-sudo mv wordpress wap.codepromax.com.de
+sudo mv wordpress waf.codepromax.com.de
 ```
 ```bash
-sudo chown -R www-data:www-data /var/www/wap.codepromax.com.de
+sudo chown -R www-data:www-data /var/www/waf.codepromax.com.de
 ```
 ```bash
-sudo chmod -R 755 /var/www/wap.codepromax.com.de
+sudo chmod -R 755 /var/www/waf.codepromax.com.de
 ```
 
 ### Setup Laravel
@@ -183,27 +183,27 @@ cd /var/www
 sudo apt install composer -y
 ```
 ```bash
-sudo composer create-project --prefer-dist laravel/laravel wap2.codepromax.com.de
+sudo composer create-project --prefer-dist laravel/laravel waf2.codepromax.com.de
 ```
 ```bash
-sudo chown -R www-data:www-data /var/www/wap2.codepromax.com.de
+sudo chown -R www-data:www-data /var/www/waf2.codepromax.com.de
 ```
 ```bash
-sudo chmod -R 755 /var/www/wap2.codepromax.com.de
+sudo chmod -R 755 /var/www/waf2.codepromax.com.de
 ```
 
 ### Configure NGINX for WordPress and Laravel
 Create the NGINX configuration file for WordPress:
 ```bash
-sudo nano /etc/nginx/sites-available/wap.codepromax.com.de
+sudo nano /etc/nginx/sites-available/waf.codepromax.com.de
 ```
 Add the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name wap.codepromax.com.de;
+    server_name waf.codepromax.com.de;
 
-    root /var/www/wap.codepromax.com.de;
+    root /var/www/waf.codepromax.com.de;
     index index.php index.html index.htm;
 
     location / {
@@ -222,15 +222,15 @@ server {
 ```
 Create the NGINX configuration file for Laravel:
 ```bash
-sudo nano /etc/nginx/sites-available/wap2.codepromax.com.de
+sudo nano /etc/nginx/sites-available/waf2.codepromax.com.de
 ```
 Add the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name wap2.codepromax.com.de;
+    server_name waf2.codepromax.com.de;
 
-    root /var/www/wap2.codepromax.com.de/public;
+    root /var/www/waf2.codepromax.com.de/public;
     index index.php index.html index.htm;
 
     location / {
@@ -249,10 +249,10 @@ server {
 ```
 Enable the sites and restart NGINX:
 ```bash
-sudo ln -s /etc/nginx/sites-available/wap.codepromax.com.de /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/waf.codepromax.com.de /etc/nginx/sites-enabled/
 ```
 ```bash
-sudo ln -s /etc/nginx/sites-available/wap2.codepromax.com.de /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/waf2.codepromax.com.de /etc/nginx/sites-enabled/
 ```
 ```bash
 sudo chown -R www-data:www-data /var/log/nginx
@@ -271,7 +271,7 @@ sudo nginx -t
 ### Update Site Configurations to Use ModSecurity
 For WordPress:
 ```bash
-sudo nano /etc/nginx/sites-available/wap.codepromax.com.de
+sudo nano /etc/nginx/sites-available/waf.codepromax.com.de
 ```
 Add the following lines within the server block:
 ```nginx
@@ -281,7 +281,7 @@ modsecurity_rules_file /etc/nginx/modsecurity.conf;
 
 For Laravel:
 ```bash
-sudo nano /etc/nginx/sites-available/wap2.codepromax.com.de
+sudo nano /etc/nginx/sites-available/waf2.codepromax.com.de
 ```
 Add the following lines within the server block:
 ```nginx
